@@ -1,47 +1,32 @@
 package com.example;
 
 import org.junit.Assert;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.junit.Test;
-import java.util.List;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-@RunWith(Parameterized.class)
+@RunWith(MockitoJUnitRunner.class)
 public class LionTest {
 
-    private String sex;
-    private boolean expectedMane;
-    public LionTest (String sex, boolean expectedMane) {
-        this.sex = sex;
-        this.expectedMane = expectedMane;
-    }
+    Feline feline = new Feline();
 
     @Test (expected = Exception.class)
     public void shouldThrowException() throws Exception {
-        Lion lion = new Lion("");
+        Lion lion = new Lion(feline, "");
         Boolean hasMane = lion.doesHaveMane();
     }
 
-    @Parameterized.Parameters
-    public static Object[][] getMane() {
-        return new Object[][] {
-                { "Самка", false},
-                { "Самец", true}
-        };
-    }
+    @Mock
+    Feline mockedFeline;
 
     @Test
-    public void shouldCheckMane() throws Exception {
-        Lion lion = new Lion(sex);
-        Boolean hasMane = lion.doesHaveMane();
-        Assert.assertEquals(expectedMane, hasMane);
-    }
-
-    @Test
-    public void shouldGetCarnivoreFood() throws Exception {
-        Feline feline = new Feline();
-        Lion lion = new Lion(feline);
-        Assert.assertEquals(List.of("Животные", "Птицы", "Рыба"), lion.getFood());
+    public void shouldGetKittens() throws Exception{
+        Lion lion = new Lion(mockedFeline, "Самец");
+        Mockito.when(lion.getKittens()).thenReturn(1);
+        int kittens = lion.getKittens();
+        Assert.assertEquals(1, kittens);
     }
 
 }
