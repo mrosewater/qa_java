@@ -33,10 +33,4 @@ public class LionManeAndFoodTest {
         Assert.assertEquals(expectedMane, hasMane);
     }
 
-    @Test
-    public void shouldGetCarnivoreFood() throws Exception {
-        Lion lion = new Lion(feline, sex);
-        Assert.assertEquals(List.of("Животные", "Птицы", "Рыба"), lion.getFood());
-    }
-
 }
